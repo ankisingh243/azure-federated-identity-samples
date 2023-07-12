@@ -11,12 +11,12 @@ jobs:
     
     steps:
     
-    - name: Set up Homebrew
-      id: set-up-homebrew
-      uses: Homebrew/actions/setup-homebrew@master
+ #   - name: Set up Homebrew
+  #    id: set-up-homebrew
+  #    uses: Homebrew/actions/setup-homebrew@master
     
-    - name: add brew to path
-      run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+ #   - name: add brew to path
+  #    run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         
     - name: Az CLI login
       uses: azure/login@v1
@@ -29,7 +29,12 @@ jobs:
       run: az aks get-credentials -g ${{ secrets.RESOURCE_GROUP_NAME }} -n ${{ secrets.AKS_NAME }}
         
     - name: Get kubelogin
-      run: brew install Azure/kubelogin/kubelogin
+#      run: brew install Azure/kubelogin/kubelogin
+      run: |
+            curl -LO "https://github.com/Azure/kubelogin/releases/download/$(kubeloginVersion)/kubelogin-linux-amd64.zip"
+            sudo unzip -j "kubelogin-linux-amd64.zip" -d /usr/local/bin
+            rm -f "kubelogin-linux-amd64.zip"
+            kubelogin --version
         
     - name: Convert kubeconfig
       run: kubelogin convert-kubeconfig -l workloadidentity
