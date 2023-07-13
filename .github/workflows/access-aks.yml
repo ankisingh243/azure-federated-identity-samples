@@ -59,6 +59,7 @@ jobs:
         AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       run: |
         export AZURE_FEDERATED_TOKEN_FILE=${RUNNER_TEMP}/.token
+        echo $AZURE_FEDERATED_TOKEN_FILE
         kubectl get nodes
         # kubectl apply -f deployment.yaml
         
