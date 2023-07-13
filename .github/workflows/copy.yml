@@ -31,8 +31,14 @@ jobs:
         
     - name: Convert kubeconfig
       run: kubelogin convert-kubeconfig -l workloadidentity
+       
+       
+    - name: Retrieve id-token and store
+      run: |
+        IDTOKEN=$(curl -sSL -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" -H "Accept: application/json; api-version=2.0" -H "Content-Type: application/json" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=api://AzureADTokenExchange" | jq -r '.value')
+        echo $IDTOKEN > ${RUNNER_TEMP}/.token
+        echo $IDTOKEN
         
-
       
     - name: Run kubectl
       env:
