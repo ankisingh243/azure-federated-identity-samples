@@ -60,6 +60,6 @@ jobs:
       run: |
         export AZURE_FEDERATED_TOKEN_FILE=${RUNNER_TEMP}/.token
         kubectl get nodes
-        kubectl apply -f deployment.yaml
+        # kubectl apply -f deployment.yaml
         
       
